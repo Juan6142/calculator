@@ -51,6 +51,7 @@ rgba(9, 19, 41, 0.771)
     font-size: 50px;
     text-align: right;
     margin-right: 5%;
+    margin-left: 5%;
 }
 
 .numbers {
@@ -91,6 +92,11 @@ rgba(9, 19, 41, 0.771)
 .button-active {
     background-color: #ffd68a !important;
 }
+
+.decimal-active {
+    background-color: rgb(18, 66, 76) !important;
+}
+
 .operators button {
     width: 40%;
     height: 27.25%;
