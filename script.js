@@ -6,6 +6,7 @@ let test = 0
 let sign = ""
 let array = []
 let conter = 2
+let anyButtonActive = 0
 result = 0
 
 const output = document.querySelector("#output")
@@ -14,42 +15,77 @@ equals.addEventListener("click", operate)
 
 let operator = document.querySelector("#add")
 operator.addEventListener("click", e => {
+    if (anyButtonActive === 1) {
+        operate()
+        operandOne = result
+        operator.classList.add("button-active") 
+    }
     sign = "+"
-    array.push(firstNumber)
-    array.push(sign)
-    
+    anyButtonActive = 1
     if (operandOne != undefined) {
         output.textContent += "+"
     }
     console.log("Operator:" + " " + sign)
-
 })
 
 let subtraction = document.querySelector("#subtraction")
 subtraction.addEventListener("click", e => {
+    if (anyButtonActive === 1) {
+        operate()
+        operandOne = result
+        subtraction.classList.add("button-active")   
+    } 
     sign = "-"
-    array.push(firstNumber)
-    array.push(sign)
-    
+    anyButtonActive = 1
     if (operandOne != undefined) {
         output.textContent += "-"
     }
     console.log("Operator:" + " " + sign)
+})
 
+let multiplication = document.querySelector("#multiplication")
+multiplication.addEventListener("click", e => {
+    if (anyButtonActive === 1) {
+        operate()
+        operandOne = result
+        multiplication.classList.add("button-active")   
+    } 
+    sign = "*"
+    anyButtonActive = 1
+    if (operandOne != undefined) {
+        output.textContent += "*"
+    }
+    console.log("Operator:" + " " + sign)
+})
+
+let division = document.querySelector("#division")
+division.addEventListener("click", e => {
+    if (anyButtonActive === 1) {
+        operate()
+        operandOne = result
+        division.classList.add("button-active")   
+    } 
+    sign = "/"
+    anyButtonActive = 1
+    if (operandOne != undefined) {
+        output.textContent += "/"
+    }
+    console.log("Operator:" + " " + sign)
 })
 
 
 //operate
 function operate(operandOne, operandTwo) {
     if (sign === "+" && result === 0) {
-       result = add(operandOne, operandTwo)
+       result = add(operandOne, operandTwo) 
        console.log(`Result: ${result}`)
        output.textContent = result
+       
     } else if (sign === "+" && result != 0) {
-       result = add(operandOne, operandTwo)
+       result = add(operandOne, operandTwo) 
        console.log(`Result${conter}: ${result} `)
        output.textContent = result 
-       conter++ 
+       conter++   
     }
     if (sign === "-" && result === 0) {
         result = subtract(operandOne, operandTwo)
@@ -62,8 +98,34 @@ function operate(operandOne, operandTwo) {
         output.textContent = result 
         conter++ 
     }
+    if (sign === "*" && result === 0) {
+        result = multiply(operandOne, operandTwo)
+        console.log(`Result: ${result}`)
+        output.textContent = result
+ 
+     } else if (sign === "*" && result != 0) {
+        result = multiply(operandOne, operandTwo)
+        console.log(`Result${conter}: ${result} `)
+        output.textContent = result 
+        conter++ 
+    }
+    if (sign === "/" && result === 0) {
+        result = divide(operandOne, operandTwo)
+        console.log(`Result: ${result}`)
+        output.textContent = result
+ 
+     } else if (sign === "/" && result != 0) {
+        result = divide(operandOne, operandTwo)
+        console.log(`Result${conter}: ${result} `)
+        output.textContent = result 
+        conter++ 
+    }
     operandTwo = undefined
     secondNumber = ""
+    anyButtonActive = 0
+    subtraction.classList.remove("button-active")
+    operator.classList.remove("button-active")
+    //sign = ""
     return result
 }
 
@@ -71,7 +133,6 @@ function operate(operandOne, operandTwo) {
 function add() {
     if (result === 0) {
         sign = ""
-        array.push(secondNumber)
         return operandOne + operandTwo
     } else if (result != 0) {
         operandOne = result
@@ -83,11 +144,34 @@ function add() {
 function subtract() {
     if (result === 0) {
         sign = ""
-        array.push(secondNumber)
         return operandOne - operandTwo
     } else if (result != 0) {
         operandOne = result
         return operandOne - operandTwo
+    }
+}
+
+function multiply() {
+    if (result === 0) {
+        sign = ""
+        return operandOne * operandTwo
+    } else if (result != 0) {
+        operandOne = result
+        return operandOne * operandTwo
+    }
+}
+
+function divide() {
+    if (operandTwo === 0) {
+        return "OPPS SYNTAX ERROR"
+    }
+    if (result === 0) {
+        sign = ""
+        array.push(secondNumber)
+        return operandOne / operandTwo
+    } else if (result != 0) {
+        operandOne = result
+        return operandOne / operandTwo
     }
 }
 
@@ -232,13 +316,6 @@ zero.addEventListener("click", e => {
     }
 })
 
-function multiply(a, b) {
-    return a * b
-}
-
-function divide(a, b) {
-    return a / b
-}
 
 
 
