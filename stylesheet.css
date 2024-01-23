@@ -14,33 +14,33 @@ h1 {
 
 .main-container {
     margin: 0px auto;
-    background-color: rgb(142, 141, 141);
+    background-color: rgb(59, 53, 53);
     width: 600px;
     height: 600px;
-    border-radius: 5%;   
+    border-radius: 5%;  
 }
+/*rgb(142, 141, 141)*/
+/*background-color: rgb(47, 42, 42)*/
 
 .brand {
     text-align: center;
     margin-top: 1em;
     padding-top: 1em;
 }
-/*
-colors
-rgba(9, 19, 41, 0.771)
-*/
 
 .mark {
-    background-color: rgb(183, 183, 183);
+    background-color: rgb(94, 92, 92);
     padding: 1.5em;
     width: 80%;
     margin: 0 auto;
     border-radius: 10px;
     margin-top: 5.25%;
 }
+/*background-color: rgb(183, 183, 183)*/
+/*rgb(94, 92, 92)*/
 
 .screen {
-    background-color: rgba(107, 255, 149, 0.681);
+    background-color: rgba(246, 255, 249, 0.681);
     border-radius: 10px;
     width: 100%;
     padding: 1.5em 0px;
@@ -52,6 +52,7 @@ rgba(9, 19, 41, 0.771)
     text-align: right;
     margin-right: 5%;
     margin-left: 5%;
+
 }
 
 .numbers {
@@ -61,12 +62,13 @@ rgba(9, 19, 41, 0.771)
     flex-direction: row-reverse;
     width: 60%;
     margin: 1em;
+    
 }
 
 .numbers button {
     width: 30%;
     height: 20%;
-    font-size: 24px;
+    font-size: 30px;
     margin: 2.5% 0px;
     border-radius: 10px;
     box-sizing: border-box;
@@ -74,8 +76,12 @@ rgba(9, 19, 41, 0.771)
     margin-left: 9px;
     display: block;
     background-color: black;
-    color:wheat;
+    color: wheat;
     
+}
+
+#equal {
+    color: white!important;
 }
 
 /*operators*/
@@ -100,7 +106,7 @@ rgba(9, 19, 41, 0.771)
 .operators button {
     width: 40%;
     height: 27.25%;
-    font-size: 24px;
+    font-size: 30px;
     border-radius: 10px;
     box-sizing: border-box;
     border: 0px none;
@@ -115,7 +121,7 @@ rgba(9, 19, 41, 0.771)
 }
 
 .numbers button:hover {
-    background-color: rgb(18, 66, 76);
+    background-color: rgb(33, 122, 142);
 }
 
 .buttons-container {
@@ -132,21 +138,43 @@ rgba(9, 19, 41, 0.771)
     background-color: rgb(255, 102, 102)
 }
 
+.small {
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    width: 27.25%;
+    margin: 0px 1em; 
+}
+
+.operators .small-button {
+    margin-left: -22.5%;
+    width: 71.5px;
+    height: 50%;
+    font-size: 25px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    border: 0px none;
+    display: block;
+    background-color: orange!important;
+    color: white!important;
+}
+
 #undo {
     color: wheat;
-    background-color: rgb(0, 104, 152) ;
+    background-color: rgb(0, 104, 152)!important ;
 }
 
 #undo:hover {
-    background-color:  rgb(45, 172, 223);
+    background-color:  rgb(45, 172, 223)!important;
 }
+
 #reset {
     color: wheat;
-    background-color: rgb(50, 52, 194);
+    background-color: rgb(50, 52, 194)!important;
 }
 
 #reset:hover {
-    background-color:  rgb(130, 134, 250);
+    background-color:  rgb(130, 134, 250)!important;
 }
 
 footer {

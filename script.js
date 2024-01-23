@@ -2,9 +2,7 @@ let operandOne = undefined
 let operandTwo = undefined
 let firstNumber = ""
 let secondNumber = ""
-let test = 0
 let sign = ""
-let array = []
 let conter = 2
 let anyButtonActive = 0
 let isFloatButtonActive = false
@@ -46,6 +44,9 @@ subtraction.addEventListener("click", e => {
     sign = "-"
     anyButtonActive = 1
     if (output.textContent === "ERROR") {
+        //error 
+        result = 0
+        operandOne = undefined
         return output.textContent = "ERROR"
     }
     if (operandOne != undefined) {
@@ -66,6 +67,8 @@ multiplication.addEventListener("click", e => {
     sign = "*"
     anyButtonActive = 1
     if (output.textContent === "ERROR") {
+        result = 0
+        operandOne = undefined
         return output.textContent = "ERROR"
     }
     if (operandOne != undefined) {
@@ -86,6 +89,8 @@ division.addEventListener("click", e => {
     sign = "/"
     anyButtonActive = 1
     if (output.textContent === "ERROR") {
+        result = 0
+        operandOne = undefined
         return output.textContent = "ERROR"
     }
     if (operandOne != undefined) {
@@ -96,8 +101,13 @@ division.addEventListener("click", e => {
 
 //operate
 function operate(operandOne, operandTwo) {
-    isFloatButtonActive = false
-    decimal.classList.remove("decimal-active")
+    if (firstNumber.includes(".")) {
+        isFloatButtonActive = true
+        decimal.classList.add("decimal-active")
+    } else {
+        isFloatButtonActive = false
+        decimal.classList.remove("decimal-active")
+    }
     if (sign === "+" && result === 0) { 
        result = add(operandOne, operandTwo) 
        result = Number(result.toFixed(10))
@@ -155,14 +165,17 @@ function operate(operandOne, operandTwo) {
     operandTwo = undefined
     secondNumber = ""
     anyButtonActive = 0
+    operator.classList.remove("button-active")  
     subtraction.classList.remove("button-active")
-    operator.classList.remove("button-active")
-    
+    multiplication.classList.remove("button-active")
+    division.classList.remove("button-active") 
+
     return result
 }
 
 //add
 function add() {
+    temp = operandOne + operandTwo
     if (operandOne !== undefined && sign == "+" && operandTwo === undefined && result === 0) {
         sign = ""
         anyButtonActive = 0;
@@ -178,19 +191,44 @@ function add() {
             sign = "";
             firstNumber = ""
             secondNumber = ""
+            temp = result
             return operandOne + operandTwo;
-        } else  if (result !== 0) {
-            firstNumber = ""
-            secondNumber = ""
-            sign = "";
-            return result + operandTwo;
+        } else if (result !== 0) {
+            if (firstNumber !== "" && secondNumber !== "") {
+                firstNumber = ""
+                sign = "";
+                secondNumber = ""
+                return operandOne + operandTwo
+            }
+            else if (firstNumber === "") {
+                operandOne = result
+                firstNumber = ""
+                secondNumber = ""
+                sign = "";
+                return operandOne + operandTwo
+            } 
         }
     }
 }
-
-//sustract
+//+/-
+const plusMinus = document.querySelector("#plus-minus")
+plusMinus.addEventListener("click", changeSign)
+function changeSign() {
+    if (result !== 0) {
+        result = -result;
+        output.textContent = result;
+    } else if (sign === "-" && operandTwo !== undefined) {
+        operandTwo = -operandTwo;
+        output.textContent = `${operandOne === undefined ? 0 : operandOne}${sign}${isNaN(operandTwo) ? '' : operandTwo}`;
+    } else if (operandOne !== undefined) {
+        operandOne = -operandOne;
+        output.textContent = `${operandOne}${sign}${isNaN(operandTwo) ? '' : operandTwo}`;
+    }  
+}
+//subtract
 function subtract() {
-    if (operandOne !== undefined && sign == "-" && operandTwo === undefined && result === 0) {
+
+    if (operandOne !== undefined && sign === "-" && operandTwo === undefined && result === 0) {
         sign = ""
         anyButtonActive = 0;
         return output.textContent = "ERROR";
@@ -206,11 +244,20 @@ function subtract() {
             firstNumber = ""
             secondNumber = ""
             return operandOne - operandTwo;
-        } else  if (result !== 0) {
-            firstNumber = ""
-            secondNumber = ""
-            sign = "";
-            return result - operandTwo;
+        } else if (result !== 0) {
+            if (firstNumber !== "" && secondNumber !== "") {
+                firstNumber = ""
+                sign = "";
+                secondNumber = ""
+                return operandOne + operandTwo
+            }
+            else if (firstNumber === "") {
+                operandOne = result
+                firstNumber = ""
+                secondNumber = ""
+                sign = "";
+                return operandOne + operandTwo
+            } 
         }
     }
 }
@@ -232,11 +279,20 @@ function multiply() {
             firstNumber = ""
             secondNumber = ""
             return operandOne * operandTwo;
-        } else  if (result !== 0) {
-            firstNumber = ""
-            secondNumber = ""
-            sign = "";
-            return result * operandTwo;
+        } else if (result !== 0) {
+            if (firstNumber !== "" && secondNumber !== "") {
+                firstNumber = ""
+                sign = "";
+                secondNumber = ""
+                return operandOne + operandTwo
+            }
+            else if (firstNumber === "") {
+                operandOne = result
+                firstNumber = ""
+                secondNumber = ""
+                sign = "";
+                return operandOne + operandTwo
+            } 
         }
     }
 }
@@ -261,11 +317,20 @@ function divide() {
             firstNumber = ""
             secondNumber = ""
             return operandOne / operandTwo;
-        } else  if (result !== 0) {
-            firstNumber = ""
-            secondNumber = ""
-            sign = "";
-            return result / operandTwo;
+        } else if (result !== 0) {
+            if (firstNumber !== "" && secondNumber !== "") {
+                firstNumber = ""
+                sign = "";
+                secondNumber = ""
+                return operandOne + operandTwo
+            }
+            else if (firstNumber === "") {
+                operandOne = result
+                firstNumber = ""
+                secondNumber = ""
+                sign = "";
+                return operandOne + operandTwo
+            } 
         }
     }
 }
@@ -274,17 +339,23 @@ function divide() {
 const backspace = document.querySelector("#undo")
 backspace.addEventListener("click", e => {
     if (isFloatButtonActive) {
+        if (operandOne !== undefined && operandTwo !== undefined && sign !== "" && result !== 0) {
+            result = operandOne
+            sign = ""
+        }   
         if (operandOne !== undefined && operandTwo !== undefined && sign === "" && result !== 0) {
             result = 0
             firstNumber = ""
             secondNumber = ""
             operandOne = undefined
             operandTwo = undefined
-        } 
-        if (sign !== "" && secondNumber === "") {
-            sign = ""; // Borrar el signo si no hay segundo operando
             anyButtonActive = 0
-            output.textContent = operandOne === undefined ? 0 : firstNumber; // show operand 1 before deleting sign
+            isFloatButtonActive = false
+        }
+        if (sign !== "" && secondNumber === "") {
+            sign = ""; 
+            anyButtonActive = 0
+            output.textContent = operandOne === undefined ? 0 : firstNumber; 
         } else {
             if (sign !== "") {
                 secondNumber = secondNumber.substring(0, secondNumber.length - 1);
@@ -294,20 +365,26 @@ backspace.addEventListener("click", e => {
                 firstNumber = firstNumber.substring(0, firstNumber.length - 1);
                 operandOne = firstNumber === "" ? undefined : parseFloat(firstNumber);
             }
-            output.textContent = `${operandOne === undefined ? 0 : firstNumber}${sign}${isNaN(operandTwo) ? '' : secondNumber}`; // testing
+            output.textContent = `${operandOne === undefined ? 0 : firstNumber}${sign}${isNaN(operandTwo) ? '' : secondNumber}`; 
         } 
     } else {
+        if (operandOne !== undefined && operandTwo !== undefined && sign !== "" && result !== 0) {
+            result = operandOne
+            sign = ""
+        }   
         if (operandOne !== undefined && operandTwo !== undefined && sign === "" && result !== 0) {
             result = 0
             firstNumber = ""
             secondNumber = ""
             operandOne = undefined
             operandTwo = undefined
-        }
-        if (sign !== "" && secondNumber === "") {
-            sign = ""; // Borrar el signo si no hay segundo operando
             anyButtonActive = 0
-            output.textContent = operandOne === undefined ? 0 : firstNumber; // Mostrar el primer operando después de borrar el signo
+        }
+        
+        if (sign !== "" && secondNumber === "") {
+            sign = ""; 
+            anyButtonActive = 0
+            output.textContent = operandOne === undefined ? 0 : firstNumber; 
         } else {
             if (sign !== "") {
                 secondNumber = secondNumber.substring(0, secondNumber.length - 1);
@@ -336,14 +413,11 @@ backspace.addEventListener("click", e => {
     } 
 });
 
-// el primer numero es detectado como parseint ya que el boton se desactiva al borrarlo en el segundo operando
 //decimal
 const decimal = document.querySelector("#dot-decimal")
 decimal.addEventListener("click", activeDecimal)
 
-// activate decimal button
 function activeDecimal(e) {
-    // Permitir al usuario activar el botón en el primer operando
     if (!isFloatButtonActive) {
         decimal.classList.add("decimal-active");
         output.textContent += ".";  
@@ -353,7 +427,6 @@ function activeDecimal(e) {
         if (sign !== "") {
             secondNumber += ".";
         }
-        // Después de usarlo en el primer operando, desactivar automáticamente
         isFloatButtonActive = true;
         
     }
@@ -386,7 +459,6 @@ one.addEventListener("click", e => {
             output.textContent += 1
         }
     }
-    
 })
 
 const two = document.querySelector("#number-two")
@@ -616,7 +688,6 @@ nine.addEventListener("click", e => {
 const zero = document.querySelector("#number-zero")
 zero.addEventListener("click", e => {
     if ((sign === "" && firstNumber === "0") || (sign !== "" && secondNumber === "0")) {
-        // No hacer nada si la cadena actual es cero
         return;
     }
     if (sign === "") {
@@ -626,7 +697,7 @@ zero.addEventListener("click", e => {
             firstNumber += "0";
         }
         operandOne = parseFloat(firstNumber);
-        output.textContent = firstNumber;  // Actualizar el contenido completo
+        output.textContent = firstNumber; 
     } else {
         if (secondNumber === "") {
             secondNumber = "0";
@@ -638,5 +709,23 @@ zero.addEventListener("click", e => {
     }
 });
 
+const resetButton = document.querySelector("#reset")
+resetButton.addEventListener("click", reset)
 
-
+function reset() {
+    operandOne = undefined
+    operandTwo = undefined
+    firstNumber = ""
+    secondNumber = ""
+    sign = ""
+    conter = 2
+    anyButtonActive = 0
+    isFloatButtonActive = false
+    result = 0
+    output.textContent = 0
+    operator.classList.remove("button-active")  
+    subtraction.classList.remove("button-active")
+    multiplication.classList.remove("button-active")
+    division.classList.remove("button-active")  
+    decimal.classList.remove("decimal-active")        
+}
