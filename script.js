@@ -243,7 +243,6 @@ function changeSign() {
 }
 //subtract
 function subtract() {
-
     if (operandOne !== undefined && sign === "-" && operandTwo === undefined && result === 0) {
         sign = ""
         anyButtonActive = 0;
@@ -312,6 +311,7 @@ function multiply() {
         }
     }
 }
+
 //divide
 function divide() {
     if (operandTwo === 0) {
@@ -427,7 +427,6 @@ backspace.addEventListener("click", e => {
             decimal.classList.add("decimal-active")
         }
     } 
-
 });
 
 //decimal
@@ -444,8 +443,7 @@ function activeDecimal(e) {
         if (sign !== "") {
             secondNumber += ".";
         }
-        isFloatButtonActive = true;
-        
+        isFloatButtonActive = true;    
     }
 }
 
