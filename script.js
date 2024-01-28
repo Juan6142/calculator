@@ -99,6 +99,7 @@ division.addEventListener("click", e => {
     console.log("Operator:" + " " + sign)
 })
 
+let stringResult = ""
 //operate
 function operate(operandOne, operandTwo) {
     if (firstNumber.includes(".")) {
@@ -160,7 +161,13 @@ function operate(operandOne, operandTwo) {
         output.textContent = result 
         conter++ 
     }
-
+    console.log(`the result it's ${result}`)
+    stringResult = stringResult.toString(result)
+    console.log(`the stringresult it's ${result}`)
+    if (stringResult.includes(".")) {
+        isFloatButtonActive = true
+        decimal.classList.add("decimal-active")
+    } 
     operandOne = undefined
     operandTwo = undefined
     secondNumber = ""
@@ -169,7 +176,6 @@ function operate(operandOne, operandTwo) {
     subtraction.classList.remove("button-active")
     multiplication.classList.remove("button-active")
     division.classList.remove("button-active") 
-
     return result
 }
 
@@ -214,6 +220,16 @@ function add() {
 const plusMinus = document.querySelector("#plus-minus")
 plusMinus.addEventListener("click", changeSign)
 function changeSign() {
+    if (operandOne !== undefined && sign === "-" && operandTwo === undefined && result === 0) {
+        sign = ""
+        anyButtonActive = 0;
+        return output.textContent = "ERROR";
+    }
+    if (operandOne === undefined && operandTwo === undefined) {
+        anyButtonActive = 0;
+        sign = ""
+        return output.textContent = "ERROR"; 
+    }
     if (result !== 0) {
         result = -result;
         output.textContent = result;
@@ -411,6 +427,7 @@ backspace.addEventListener("click", e => {
             decimal.classList.add("decimal-active")
         }
     } 
+
 });
 
 //decimal
